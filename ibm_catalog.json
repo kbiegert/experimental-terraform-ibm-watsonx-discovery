@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "deploy-arch-ibm-watson-discovery",
-      "label": "Watson Discovery",
+      "label": "[Add-ons Beta] Cloud automation for Watson Discovery",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
@@ -84,6 +84,23 @@
           "configuration": [
               {
                 "key": "ibmcloud_api_key"
+              },
+              {
+                "key": "provider_visibility",
+                "options": [
+                  {
+                    "displayname": "private",
+                    "value": "private"
+                  },
+                  {
+                    "displayname": "public",
+                    "value": "public"
+                  },
+                  {
+                    "displayname": "public-and-private",
+                    "value": "public-and-private"
+                  }
+                ]
               },
               {
                 "key": "use_existing_resource_group"
@@ -174,7 +191,57 @@
                   }
                 ]
               }
-            ]
+            ],
+          "dependencies": [
+            {
+              "name": "deploy-arch-ibm-account-infra-base",
+              "catalog_id": "9212a6da-ac9b-4f3c-94d8-83a866e1a250",
+              "flavors": ["standard"],
+              "id": "9fcd1945-8ebc-4072-85dc-6400653e7077",
+              "ignore_auto_referencing": ["*"],
+              "input_mapping": [
+                {
+                  "dependency_output": "workload_resource_group_name",
+                  "version_input": "resource_group_name"
+                },
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "version_input": "use_existing_resource_group",
+                  "value": true
+                }
+              ],
+              "optional": true,
+              "on_by_default": true,
+              "version": "^v1.11.6"
+            },
+            {
+              "name": "testing-deploy-arch-ibm-observability",
+              "id": "5a722ff3-440a-49d4-b149-19e794bc10ca",
+              "version": "^1.2.2",
+              "flavors": ["standard"],
+              "catalog_id": "9212a6da-ac9b-4f3c-94d8-83a866e1a250",
+              "optional": true,
+              "on_by_default": true,
+              "ignore_auto_referencing": ["*"],
+              "input_mapping": [
+                {
+                  "dependency_input": "prefix",
+                  "version_input": "prefix",
+                  "reference_version": true
+                },
+                {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                }
+              ]
+            }
+          ],
+          "dependency_version_2": true
         }
       ]
     }
