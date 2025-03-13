@@ -36,10 +36,10 @@
       ],
       "flavors": [
         {
-          "label": "Standard",
-          "name": "standard",
+          "label": "Fully configurable",
+          "name": "fully-configurable",
           "install_type": "fullstack",
-          "working_directory": "solutions/standard",
+          "working_directory": "solutions/fully-configurable",
           "compliance": {
             "authority": "scc-v3",
             "profiles": [
@@ -59,7 +59,8 @@
               "role_crns": [
                 "crn:v1:bluemix:public:iam::::role:Editor"
               ],
-              "service_name": "discovery"
+              "service_name": "discovery",
+              "notes": "This is a WatsonX specific permission and must be used."
             }
           ],
           "architecture": {
@@ -82,116 +83,118 @@
             ]
           },
           "configuration": [
-              {
-                "key": "ibmcloud_api_key"
-              },
-              {
-                "key": "provider_visibility",
-                "options": [
-                  {
-                    "displayname": "private",
-                    "value": "private"
-                  },
-                  {
-                    "displayname": "public",
-                    "value": "public"
-                  },
-                  {
-                    "displayname": "public-and-private",
-                    "value": "public-and-private"
-                  }
-                ]
-              },
-              {
-                "key": "use_existing_resource_group"
-              },
-              {
-                "key": "resource_group_name"
-              },
-              {
-                "key": "prefix"
-              },
-              {
-                "key": "name"
-              },
-              {
-                "key": "region",
-                "required": true,
-                "default_value": "us-south",
-                "options": [
-                  {
-                    "displayname": "Dallas (us-south)",
-                    "value": "us-south"
-                  },
-                  {
-                    "displayname": "Frankfurt (eu-de)",
-                    "value": "eu-de"
-                  },
-                  {
-                    "displayname": "London (eu-gb)",
-                    "value": "eu-gb"
-                  },
-                  {
-                    "displayname": "Sydney (au-syd)",
-                    "value": "au-syd"
-                  },
-                  {
-                    "displayname": "Tokyo (jp-tok)",
-                    "value": "jp-tok"
-                  },
-                  {
-                    "displayname": "Washington DC (us-east)",
-                    "value": "us-east"
-                  }
-                ]
-              },
-              {
-                "key": "plan",
-                "default_value": "plus",
-                "options": [
-                  {
-                    "displayname": "Plus",
-                    "value": "plus"
-                  },
-                  {
-                    "displayname": "Premium",
-                    "value": "premium"
-                  },
-                  {
-                    "displayname": "Enterprise",
-                    "value": "enterprise"
-                  },
-                  {
-                    "displayname": "Enterprise with data isolation",
-                    "value": "enterprisedataisolation"
-                  }
-                ]
-              },
-              {
-                "key": "resource_tags"
-              },
-              {
-                "key": "access_tags"
-              },
-              {
-                "key": "service_endpoints",
-                "default_value": "private",
-                "options": [
-                  {
-                    "displayname": "Public Network",
-                    "value": "public"
-                  },
-                  {
-                    "displayname": "Private Network",
-                    "value": "private"
-                  },
-                  {
-                    "displayname": "Both Public & Private Network",
-                    "value": "public-and-private"
-                  }
-                ]
+            {
+              "key": "ibmcloud_api_key",
+              "required": true,
+              "type": "password"
+            },
+            {
+              "key": "prefix",
+              "required": true,
+              "description": "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can enter the string `__NULL__`."
+            },
+            {
+              "key": "region",
+              "required": true,
+              "default_value": "us-south",
+              "options": [
+                {
+                  "displayname": "Dallas (us-south)",
+                  "value": "us-south"
+                },
+                {
+                  "displayname": "Frankfurt (eu-de)",
+                  "value": "eu-de"
+                },
+                {
+                  "displayname": "London (eu-gb)",
+                  "value": "eu-gb"
+                },
+                {
+                  "displayname": "Sydney (au-syd)",
+                  "value": "au-syd"
+                },
+                {
+                  "displayname": "Tokyo (jp-tok)",
+                  "value": "jp-tok"
+                },
+                {
+                  "displayname": "Washington DC (us-east)",
+                  "value": "us-east"
+                }
+              ]
+            },
+            {
+              "key": "existing_resource_group_name",
+              "required": true,
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
               }
-            ],
+            },
+            {
+              "key": "name"
+            },
+            {
+              "key": "plan",
+              "default_value": "plus",
+              "options": [
+                {
+                  "displayname": "Plus",
+                  "value": "plus"
+                },
+                {
+                  "displayname": "Enterprise",
+                  "value": "enterprise"
+                }
+              ]
+            },
+            {
+              "key": "provider_visibility",
+              "options": [
+                {
+                  "displayname": "private",
+                  "value": "private"
+                },
+                {
+                  "displayname": "public",
+                  "value": "public"
+                },
+                {
+                  "displayname": "public-and-private",
+                  "value": "public-and-private"
+                }
+              ]
+            },
+            {
+              "key": "resource_tags"
+            },
+            {
+              "key": "access_tags"
+            },
+            {
+              "key": "service_endpoints",
+              "default_value": "public-and-private",
+              "options": [
+                {
+                  "displayname": "Public Network",
+                  "value": "public"
+                },
+                {
+                  "displayname": "Private Network",
+                  "value": "private"
+                },
+                {
+                  "displayname": "Both Public & Private Network",
+                  "value": "public-and-private"
+                }
+              ]
+            }
+          ],
           "dependencies": [
             {
               "name": "deploy-arch-ibm-account-infra-base",
@@ -202,7 +205,7 @@
               "input_mapping": [
                 {
                   "dependency_output": "workload_resource_group_name",
-                  "version_input": "resource_group_name"
+                  "version_input": "existing_resource_group_name"
                 },
                 {
                   "dependency_input": "prefix",
